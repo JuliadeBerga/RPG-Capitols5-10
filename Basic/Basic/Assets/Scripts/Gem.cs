@@ -11,5 +11,8 @@ public class Gem : InventoryItemBase
             return "Gem";
         }
     }
-    
+    public override void OnUse()
+    {
+        base.OnUse();
+    }
 }

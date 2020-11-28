@@ -32,6 +32,9 @@ public class PlayerControllerBasic : MonoBehaviour
     //Variable per connectar amb l'script Inventory
     public Inventory Inventory;
 
+    //Creem aquesta variable per posicionar l'item a la mà
+    public GameObject Hand;
+
     #endregion
 
     // Use this for initialization
@@ -42,8 +45,45 @@ public class PlayerControllerBasic : MonoBehaviour
 
         //Inicialitzem la variable CaracterController
         _characterController = GetComponent<CharacterController>();
+
+        //després del += cliqueu la tecla TAB i us generarà mètode
+        Inventory.ItemUsed += Inventory_ItemUsed;
+        Inventory.ItemRemoved += Inventory_ItemRemoved;
     }
- 
+
+    private void Inventory_ItemRemoved(object sender, InventoryEventArgs e)
+    {
+        //Agafem l'item del event
+        IInventoryItem item = e.Item;
+
+        //Generem objecte a partir del item
+        GameObject goItem = (item as MonoBehaviour).gameObject;
+        //Activem l'objecte
+        goItem.SetActive(true);
+
+        //Eliminar la mà com a parent del objecte
+        goItem.transform.parent = null;
+    }
+
+    //mètode generat automàticament amb Inventory.ItemUse
+    private void Inventory_ItemUsed(object sender, InventoryEventArgs e)
+    {
+        //Agafem l'item del event
+        IInventoryItem item = e.Item;
+
+        //a partir d'aquí farem alguna cosa amb el item
+        //El primer que farem serà posar l'item a la mà
+
+        //Generem objecte a partir del item
+        GameObject goItem = (item as MonoBehaviour).gameObject;
+        //Activem l'objecte
+        goItem.SetActive(true);
+
+        //Posem la mà com a parent del objecte
+        goItem.transform.parent = Hand.transform;
+        //La posició del objecte serà la posició de la mà
+        //goItem.transform.position = Hand.transform.position;
+    }
 
     private bool mIsControlEnabled = true;
 

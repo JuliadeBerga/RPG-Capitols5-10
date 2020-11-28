@@ -19,6 +19,8 @@ public class Inventory : MonoBehaviour
     // Aquí afegim un nou event: Eliminar un Item
     public event EventHandler<InventoryEventArgs> ItemRemoved;
 
+    // Aquí afegim un nou event: Usar un Item
+    public event EventHandler<InventoryEventArgs> ItemUsed;
 
     public void AddItem(IInventoryItem item)
     {
@@ -50,7 +52,17 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    
+    //Generat automàticament dsd ItemClickeHandler per usar l'item
+    internal void UseItem(IInventoryItem item)
+    {
+        //Fem exactament el mateix que amb ItemRemoved()
+        if (ItemUsed != null)
+        {
+            ItemUsed(this, new InventoryEventArgs(item));
+        }
+    }
+
+
     //Aquesta funció elimina el item del inventari
     public void RemoveItem(IInventoryItem item)
     {

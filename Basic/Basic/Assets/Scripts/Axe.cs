@@ -11,4 +11,9 @@ public class Axe : InventoryItemBase
             return "Axe";
         }
     }
+    public override void OnUse()
+    {
+        base.OnUse();
+    }
+
 }

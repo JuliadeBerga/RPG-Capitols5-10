@@ -19,6 +19,8 @@ public interface IInventoryItem
     //Afegim la funció OnDrop a la interficie del IInventoryItem
     void OnDrop();
 
+    //Es crearà automàticament aquest mètode quan feu refactorització dsd ItemClickHandler
+    void OnUse();
 }
 
 public class InventoryEventArgs : EventArgs
